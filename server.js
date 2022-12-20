@@ -1,20 +1,19 @@
 //dependencies
 const express = require("express");
-const fs = require("fs");
-const path = require('path');
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
 
 //created express and port listen
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static("public"));
 
-//requiring the routes.js
-require('./routes/routes')(app);
-
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
 app.listen(PORT, function() {
     console.log("App listening on PORT: " + PORT);
